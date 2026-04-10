@@ -25,7 +25,7 @@ export default function JournalEntry({ entry }: Props) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const files = fs.readdirSync(CONTENT_DIR).filter(f => f.endsWith('.md'));
+    const files = fs.readdirSync(CONTENT_DIR).filter(f => f.endsWith('.md') && !f.startsWith('_'));
     const paths = files.map(file => ({
         params: { slug: file.replace(/\.md$/, '') },
     }));

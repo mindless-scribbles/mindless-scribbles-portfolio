@@ -43,7 +43,7 @@ export default function Journal({ entries }: Props) {
 }
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-    const files = fs.readdirSync(CONTENT_DIR).filter(f => f.endsWith('.md'));
+    const files = fs.readdirSync(CONTENT_DIR).filter(f => f.endsWith('.md') && !f.startsWith('_'));
 
     // Build entries for every markdown file found
     const mdEntries: JournalEntry[] = files.map(file => {
