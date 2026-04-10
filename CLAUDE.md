@@ -12,9 +12,11 @@ This is **mindless-scribbles.com** — a Next.js playground for experiments, blo
 - **Build:** `npm run build`
 - **Lint:** `npx eslint .` (extends `next/core-web-vitals`, `@next/next/no-img-element` is off)
 - **Format:** `npx prettier --write .` (config in `.prettierrc`)
-- **Visual editor:** `stackbit dev` (requires `@stackbit/cli` globally installed)
+- **Deploy target:** Vercel — connect `mindless-scribbles/mindless-scribbles-portfolio` on vercel.com
 
 There are no tests configured in this project.
+
+Note: `netlify.toml` and the Stackbit visual editor are leftover from the original template. They are not used — deploy target is Vercel.
 
 ## Architecture
 
@@ -30,7 +32,7 @@ Content is loaded at build time by `src/utils/content.ts`: it reads all files, p
 
 ### Routing & Page Rendering
 
-A single catch-all route (`src/pages/[[...slug]].tsx`) handles all pages:
+A single catch-all route (`src/pages/[...slug].tsx`) handles all pages:
 1. `getStaticPaths` — enumerates all content objects with URL paths
 2. `getStaticProps` — loads all content, finds the page matching the URL, enriches it via `src/utils/static-props-resolvers.ts` (adds related posts/projects to feeds), and attaches global props (site config + theme)
 3. The page renders via `DynamicComponent`, which resolves the component by the content object's `type` field
@@ -55,6 +57,13 @@ A single catch-all route (`src/pages/[[...slug]].tsx`) handles all pages:
 ### Styling
 
 Tailwind CSS v4 with `@tailwindcss/postcss`. Main stylesheet at `src/css/main.css`. Theme style values from `content/data/style.json` are mapped to CSS class names via `src/utils/map-styles-to-class-names.ts` and `src/utils/theme-style-utils.ts`.
+
+## Technique Reference
+
+`technique_reference/` contains workflow notes, pipeline guides, and tips accumulated during development. Check here before asking how to do something — it may already be documented.
+
+Current entries:
+- `pointcloud_pipeline.md` — Maya/scan → PLY/PCD → Three.js web pipeline
 
 ## dondecastro.com
 

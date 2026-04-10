@@ -20,7 +20,6 @@ const Page: React.FC<PageComponentProps> = (props) => {
                 {metaDescription && <meta name="description" content={metaDescription} />}
                 {metaTags.map((metaTag) => {
                     if (metaTag.format === 'property') {
-                        // OpenGraph meta tags (og:*) should be have the format <meta property="og:…" content="…">
                         return <meta key={metaTag.property} property={metaTag.property} content={metaTag.content} />;
                     }
                     return <meta key={metaTag.property} name={metaTag.property} content={metaTag.content} />;
@@ -35,7 +34,10 @@ const Page: React.FC<PageComponentProps> = (props) => {
 
 export function getStaticPaths() {
     const allData = allContent();
-    const paths = allData.map((obj) => obj.__metadata.urlPath).filter(Boolean);
+    // Exclude '/' — that route is handled by pages/index.tsx
+    const paths = allData
+        .map((obj) => obj.__metadata.urlPath)
+        .filter((p) => Boolean(p) && p !== '/');
     return { paths, fallback: false };
 }
 

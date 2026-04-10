@@ -1,0 +1,357 @@
+/* ─── Page container ─────────────────────────────────────────── */
+.page {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background-color: #EBE6E0;
+    cursor: none;
+    color: #1A1817;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Viewport frame ─────────────────────────────────────────── */
+.frame {
+    position: fixed;
+    inset: 24px;
+    border: 1px solid rgba(26, 24, 23, 0.15);
+    z-index: 4;
+    pointer-events: none;
+}
+
+/* ─── Noise overlay ──────────────────────────────────────────── */
+.noise {
+    position: fixed;
+    inset: 0;
+    z-index: 3;
+    opacity: 0.12;
+    pointer-events: none;
+    mix-blend-mode: color-burn;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* ─── Watermark ──────────────────────────────────────────────── */
+.watermark {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-script);
+    font-size: 35vw;
+    color: #1A1817;
+    opacity: 0.03;
+    z-index: 1;
+    pointer-events: none;
+    white-space: nowrap;
+    user-select: none;
+}
+
+/* ─── Blur mask ──────────────────────────────────────────────── */
+.blurMask {
+    position: fixed;
+    inset: 0;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 2;
+    pointer-events: none;
+    mask-image: radial-gradient(circle 250px at var(--x, 50%) var(--y, 50%), transparent 0%, black 100%);
+    -webkit-mask-image: radial-gradient(circle 250px at var(--x, 50%) var(--y, 50%), transparent 0%, black 100%);
+}
+
+/* ─── UI layer ───────────────────────────────────────────────── */
+.ui {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 48px;
+    pointer-events: none;
+}
+
+/* ─── Header ─────────────────────────────────────────────────── */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    pointer-events: auto;
+}
+
+.brand {
+    color: #1A1817;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.brandLetters {
+    display: flex;
+    align-items: center;
+    line-height: 1;
+}
+
+.brandM {
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+}
+
+.brandDash {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 400;
+    margin: 0 -0.1em;
+    opacity: 0.4;
+}
+
+.brandS {
+    font-family: var(--font-serif);
+    font-size: 2.4rem;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: -0.02em;
+    color: transparent;
+    -webkit-text-stroke: 1px #1A1817;
+}
+
+.brandSub {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 400;
+    color: #D34110;
+    margin-top: -4px;
+}
+
+/* ─── Nav ────────────────────────────────────────────────────── */
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: right;
+}
+
+.navLink {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #1A1817;
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.navLink::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0%;
+    height: 1px;
+    background-color: #D34110;
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.navLink:hover::after {
+    width: 100%;
+    left: 0;
+    right: auto;
+}
+
+/* ─── Hero typography ────────────────────────────────────────── */
+.heroArea {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    pointer-events: none;
+}
+
+.wordSolid {
+    font-family: var(--font-serif);
+    font-size: 11vw;
+    line-height: 0.8;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin-left: 5vw;
+    opacity: 0;
+    animation: slideUpFade 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s;
+}
+
+.wordOutline {
+    font-family: var(--font-serif);
+    font-size: 12vw;
+    line-height: 0.8;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: transparent;
+    -webkit-text-stroke: 1.5px #1A1817;
+    margin-left: 14vw;
+    margin-top: -1vw;
+    opacity: 0;
+    animation: slideUpFade 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.4s;
+}
+
+/* ─── Footer ─────────────────────────────────────────────────── */
+.footer {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: flex-end;
+    pointer-events: auto;
+}
+
+.mission {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    line-height: 1.6;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #7A726D;
+    max-width: 250px;
+    opacity: 0;
+    animation: fadeIn 2s cubic-bezier(0.16, 1, 0.3, 1) forwards 1s;
+}
+
+.missionStrong {
+    color: #1A1817;
+    font-weight: 700;
+}
+
+.actions {
+    display: flex;
+    gap: 16px;
+    opacity: 0;
+    animation: fadeIn 2s cubic-bezier(0.16, 1, 0.3, 1) forwards 1.2s;
+}
+
+.metadata {
+    text-align: right;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    line-height: 1.8;
+    letter-spacing: 0.2em;
+    color: #7A726D;
+    opacity: 0;
+    animation: fadeIn 2s cubic-bezier(0.16, 1, 0.3, 1) forwards 1.4s;
+}
+
+.metadataSpan {
+    display: block;
+    color: #1A1817;
+}
+
+/* ─── Buttons ────────────────────────────────────────────────── */
+.btn {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 16px 32px;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    transition: color 0.4s ease, border-color 0.4s ease;
+    cursor: none;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #D34110;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: -1;
+}
+
+.btnFill {
+    background-color: #1A1817;
+    color: #EBE6E0;
+}
+
+.btnFill:hover {
+    color: white;
+}
+
+.btnFill:hover::before {
+    transform: scaleY(1);
+}
+
+.btnOutline {
+    border-color: #1A1817;
+    color: #1A1817;
+}
+
+.btnOutline::before {
+    background: #1A1817;
+}
+
+.btnOutline:hover {
+    color: #EBE6E0;
+}
+
+.btnOutline:hover::before {
+    transform: scaleY(1);
+}
+
+/* ─── Cursor ─────────────────────────────────────────────────── */
+.cursorDot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 4px;
+    background-color: #D34110;
+    z-index: 9999;
+    pointer-events: none;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.cursorRing {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(211, 65, 16, 0.4);
+    z-index: 9999;
+    pointer-events: none;
+    transform: translate(-50%, -50%) rotate(45deg);
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                background-color 0.3s ease,
+                border-color 0.3s ease;
+}
+
+/* ─── Keyframes ──────────────────────────────────────────────── */
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(60px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
