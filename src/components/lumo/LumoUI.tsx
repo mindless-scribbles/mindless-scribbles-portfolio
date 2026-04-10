@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from './lumo.module.css';
 
 export default function LumoUI() {
@@ -15,7 +16,7 @@ export default function LumoUI() {
                 <nav className={styles.nav}>
                     <a href="#" className={styles.navLink} data-interactive="true">Index</a>
                     <a href="#" className={styles.navLink} data-interactive="true">Expertise</a>
-                    <a href="#" className={styles.navLink} data-interactive="true">Journal</a>
+                    <Link href="/journal" className={styles.navLink} data-interactive="true">Journal</Link>
                     <a href="#" className={styles.navLink} data-interactive="true">Contact</a>
                 </nav>
             </header>

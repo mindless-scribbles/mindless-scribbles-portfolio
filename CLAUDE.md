@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Site Purpose
 
-This is **mindless-scribbles.com** — a Next.js playground for experiments, blog posts, and interactive demos. It is NOT the dondecastro.com professional portfolio (that lives in `dondecastro-demoreel/` as reference material for a separate Astro repo).
+This is **mindless-scribbles.com** — a Next.js playground for experiments, blog posts, and interactive demos.
 
 ## Commands
 
@@ -20,7 +20,7 @@ Note: `netlify.toml` and the Stackbit visual editor are leftover from the origin
 
 ## Architecture
 
-This is a Next.js (Pages Router) site using Tailwind CSS v4 and the Netlify/Stackbit visual editor. All pages are statically generated.
+This is a Next.js (Pages Router) site using Tailwind CSS v4. All pages are statically generated.
 
 ### Content System
 
@@ -46,10 +46,6 @@ A single catch-all route (`src/pages/[...slug].tsx`) handles all pages:
 - `atoms/` — primitives (Action/button, Link, Social icon, BackgroundImage)
 - `svgs/` — icon components
 
-### Content Models (Stackbit)
-
-`.stackbit/models/` defines the content schema — field types, reference relationships, and model names. These drive both the visual editor UI and the reference resolution in `content.ts`. `stackbit.config.ts` wires everything together.
-
 ### Type System
 
 `src/types/generated.ts` contains TypeScript types derived from the Stackbit models. `src/types/base.ts` has base content types (`ContentObject`, metadata attributes). Path alias `@/*` maps to `./src/*`.
@@ -64,7 +60,6 @@ Tailwind CSS v4 with `@tailwindcss/postcss`. Main stylesheet at `src/css/main.cs
 
 Current entries:
 - `pointcloud_pipeline.md` — Maya/scan → PLY/PCD → Three.js web pipeline
+- `email_forwarding.md` — Squarespace email forwarding → Gmail setup
+- `design_decisions.md` — colour choices, alternatives shelved for later, design rationale
 
-## dondecastro.com
-
-Reference material for the separate `dondecastro-demoreel` Astro repo lives in `dondecastro-demoreel/`. Do not edit those files here — they are for use in a separate repository.

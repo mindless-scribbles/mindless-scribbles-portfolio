@@ -1,0 +1,348 @@
+/* ─── Page ───────────────────────────────────────────────────── */
+.page {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #EBE6E0;
+    color: #1A1817;
+    cursor: crosshair;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+/* ─── Shader canvas ──────────────────────────────────────────── */
+.canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.6;
+    transition: opacity 0.5s ease;
+}
+
+/* ─── Wrapper ────────────────────────────────────────────────── */
+.wrapper {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 3vw;
+}
+
+/* ─── Header ─────────────────────────────────────────────────── */
+.header {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4vh;
+}
+
+.headerLeft,
+.headerRight {
+    display: flex;
+    gap: 2rem;
+}
+
+.headerRight a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* ─── Main ───────────────────────────────────────────────────── */
+.main {
+    flex-grow: 1;
+    display: flex;
+    align-items: flex-start;
+}
+
+/* ─── Monumental list ────────────────────────────────────────── */
+.monumentalList {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7.5vw, 9rem);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+    text-align: left;
+    word-wrap: break-word;
+    hyphens: auto;
+}
+
+.projectItem {
+    position: relative;
+    display: inline;
+    transition: color 0.3s ease, opacity 0.3s ease;
+    cursor: crosshair;
+}
+
+.monumentalList.isHovering .projectItem:not(.active) {
+    opacity: 0.15;
+}
+
+.entryLink {
+    color: inherit;
+    text-decoration: none;
+}
+
+.separator {
+    font-style: normal;
+    margin: 0 0.1em;
+    font-weight: 300;
+    opacity: 0.4;
+}
+
+.superscript {
+    font-family: var(--font-mono);
+    font-size: 0.15em;
+    vertical-align: super;
+    letter-spacing: 0;
+    margin-left: 0.2em;
+    margin-right: 0.4em;
+    display: inline-block;
+    transform: translateY(-2em);
+    opacity: 0.8;
+}
+
+/* ─── Footer ─────────────────────────────────────────────────── */
+.footer {
+    margin-top: 8vh;
+    border-top: 1px solid rgba(31, 27, 24, 0.3);
+    padding-top: 1rem;
+}
+
+.indexHeader {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.indexGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    line-height: 1.4;
+}
+
+.indexItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.indexTitle {
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.indexMeta {
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+
+.indexDesc {
+    margin-top: 0.5rem;
+    opacity: 0.8;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .indexGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .monumentalList {
+        font-size: 3.5rem;
+        line-height: 1.05;
+    }
+
+    .superscript {
+        transform: translateY(-1.5em);
+    }
+
+    .indexGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+/* ─── Entry detail page ──────────────────────────────────────── */
+.entryMain {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4vw;
+    align-items: start;
+}
+
+.projectHero {
+    grid-column: 1 / -1;
+    margin-bottom: 8vh;
+}
+
+.projectTitle {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 10vw, 12rem);
+    line-height: 0.85;
+    letter-spacing: -0.03em;
+    font-weight: 400;
+}
+
+.contentBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.description {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: 1.3;
+    max-width: 500px;
+}
+
+.processLog {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    border-top: 1px solid rgba(31, 27, 24, 0.2);
+    padding-top: 1.5rem;
+}
+
+.processLogHeader {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+}
+
+.logEntry {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 1rem;
+}
+
+.logTime {
+    opacity: 0.5;
+}
+
+.logDesc {
+    line-height: 1.4;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    position: sticky;
+    top: 3vw;
+}
+
+.downloadZone {
+    padding: 2rem;
+    border: 1px solid #1A1817;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-family: var(--font-mono);
+}
+
+.downloadLabel {
+    font-size: 10px;
+    opacity: 0.6;
+    text-transform: uppercase;
+}
+
+.downloadFilename {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.btnDownload {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    background: #1A1817;
+    color: #EBE6E0;
+    padding: 1rem;
+    text-align: center;
+    font-weight: 700;
+    text-decoration: none;
+    display: block;
+    transition: background 0.3s ease, color 0.3s ease;
+    cursor: crosshair;
+}
+
+.btnDownload:hover {
+    background: transparent;
+    color: #1A1817;
+}
+
+.downloadBuild {
+    font-size: 9px;
+    opacity: 0.5;
+    text-align: center;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+}
+
+.specsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    border-top: 1px solid rgba(31, 27, 24, 0.2);
+    padding-top: 1.5rem;
+}
+
+.specItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.specLabel {
+    opacity: 0.5;
+}
+
+.entryFooter {
+    margin-top: 12vh;
+    border-top: 1px solid rgba(31, 27, 24, 0.3);
+    padding-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+@media (max-width: 1024px) {
+    .entryMain {
+        grid-template-columns: 1fr;
+    }
+    .sidebar {
+        position: static;
+    }
+}
