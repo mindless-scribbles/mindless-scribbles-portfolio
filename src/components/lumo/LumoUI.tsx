@@ -15,7 +15,7 @@ export default function LumoUI() {
                 </a>
                 <nav className={styles.nav}>
                     <a href="#" className={styles.navLink} data-interactive="true">Index</a>
-                    <a href="#" className={styles.navLink} data-interactive="true">Expertise</a>
+                    <Link href="/info" className={styles.navLink} data-interactive="true">Expertise</Link>
                     <Link href="/journal" className={styles.navLink} data-interactive="true">Journal</Link>
                     <a href="#" className={styles.navLink} data-interactive="true">Contact</a>
                 </nav>
