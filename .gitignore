@@ -39,3 +39,7 @@ yarn-error.log*
 
 # Local Netlify folder
 .netlify
+
+# Local files
+deno.lock
+*.zip
