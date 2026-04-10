@@ -195,7 +195,7 @@
     color: transparent;
     -webkit-text-stroke: 1.5px #1A1817;
     margin-left: 14vw;
-    margin-top: -1vw;
+    margin-top: -0.5vw;
     opacity: 0;
     animation: slideUpFade 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.4s;
 }
@@ -354,4 +354,94 @@
 @keyframes fadeIn {
     from { opacity: 0; }
     to   { opacity: 1; }
+}
+
+/* ─── Mobile ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+    /* Tighter frame */
+    .frame {
+        inset: 12px;
+    }
+
+    /* Smaller blur hole so it fits the screen */
+    .blurMask {
+        mask-image: radial-gradient(circle 120px at var(--x, 50%) var(--y, 50%), transparent 0%, black 100%);
+        -webkit-mask-image: radial-gradient(circle 120px at var(--x, 50%) var(--y, 50%), transparent 0%, black 100%);
+    }
+
+    /* Tighter padding on the whole UI layer */
+    .ui {
+        padding: 24px;
+    }
+
+    /* Stack nav horizontally on mobile */
+    .nav {
+        flex-direction: row;
+        gap: 16px;
+    }
+
+    .nav .navLink {
+        font-size: 0.65rem;
+    }
+
+    /* Scale brand down slightly */
+    .brandM {
+        font-size: 1.6rem;
+    }
+
+    .brandDash {
+        font-size: 1.4rem;
+    }
+
+    .brandS {
+        font-size: 1.8rem;
+    }
+
+    .brandSub {
+        font-size: 0.55rem;
+    }
+
+    /* Hero — let vw scaling do most of the work,
+       but rein in the offsets so text stays inside frame */
+    .wordSolid {
+        font-size: 14vw;
+        margin-left: 4vw;
+    }
+
+    .wordOutline {
+        font-size: 15vw;
+        margin-left: 6vw;
+        margin-top: -0.5vw;
+        -webkit-text-stroke: 0.5px #1A1817;
+    }
+
+    /* Stack footer into a single column */
+    .footer {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .mission {
+        max-width: 100%;
+    }
+
+    .actions {
+        justify-content: flex-start;
+    }
+
+    .btn {
+        padding: 12px 20px;
+        font-size: 0.65rem;
+    }
+
+    .metadata {
+        text-align: left;
+    }
+
+    /* Hide custom cursor on touch devices */
+    .cursorDot,
+    .cursorRing {
+        display: none;
+    }
 }
