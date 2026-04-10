@@ -38,7 +38,7 @@ export default function LumoPage() {
             <ThreeBackground />
 
             {/* Layer 1 — Watermark */}
-            <div className={styles.watermark} aria-hidden="true">Studios</div>
+            <div className={styles.watermark} aria-hidden="true">Don De Castro</div>
 
             {/* Layer 2 — Blur mask with cursor hole */}
             <BlurMask />

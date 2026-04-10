@@ -28,7 +28,7 @@ export default function ThreeBackground() {
             0.01,
             40
         );
-        camera.position.set(-0.8, 0.2, 1.5);
+        camera.position.set(-0.8, -0.2, 1.5);
         scene.add(camera);
 
         // ── Controls ──────────────────────────────────────────────
@@ -39,6 +39,7 @@ export default function ThreeBackground() {
         controls.dampingFactor   = 0.05;
         controls.autoRotate      = true;
         controls.autoRotateSpeed = 0.5;
+        controls.target.set(0, -0.15, 0); // pivot below center of bust
 
         // ── Fallback geometry (torus knot particles) ──────────────
         const createFallback = () => {
@@ -57,12 +58,11 @@ export default function ThreeBackground() {
             geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
             const mat = new THREE.PointsMaterial({
                 size: 0.004,
-                color: 0x1A1817,
+                color: 0xA89F98,
                 transparent: true,
-                opacity: 0.5,
+                opacity: 0.45,
             });
             const pts = new THREE.Points(geo, mat);
-            pts.position.x = 0.3;
             scene.add(pts);
             return pts;
         };
@@ -76,10 +76,9 @@ export default function ThreeBackground() {
                 points.geometry.center();
                 points.geometry.rotateX(Math.PI);
                 (points.material as THREE.PointsMaterial).size    = 0.005;
-                (points.material as THREE.PointsMaterial).color.setHex(0x1A1817);
+                (points.material as THREE.PointsMaterial).color.setHex(0xA89F98);
                 (points.material as THREE.PointsMaterial).transparent = true;
-                (points.material as THREE.PointsMaterial).opacity  = 0.6;
-                points.position.x = 0.3;
+                (points.material as THREE.PointsMaterial).opacity  = 0.45;
                 scene.add(points);
             },
             undefined,
