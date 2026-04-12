@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import styles from './lumo.module.css';
+import styles from './home.module.css';
 
 export default function BlurMask() {
     const ref = useRef<HTMLDivElement>(null);

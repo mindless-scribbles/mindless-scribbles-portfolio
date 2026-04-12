@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import { Italianno, Playfair_Display, Space_Mono } from 'next/font/google';
-import LumoUI from './LumoUI';
-import styles from './lumo.module.css';
+import HomeUI from './HomeUI';
+import styles from './home.module.css';
 
 // Client-only components — Three.js and DOM APIs crash during SSR/build
 const ThreeBackground = dynamic(() => import('./ThreeBackground'), { ssr: false, loading: () => null });
@@ -31,7 +31,7 @@ const italianno = Italianno({
     display: 'swap',
 });
 
-export default function LumoPage() {
+export default function HomePage() {
     return (
         <div className={`${playfair.variable} ${spaceMono.variable} ${italianno.variable} ${styles.page}`}>
             {/* Layer 0 — Three.js particle cloud */}
@@ -50,7 +50,7 @@ export default function LumoPage() {
             <div className={styles.frame} aria-hidden="true" />
 
             {/* Layer 10 — UI (nav, hero, footer) */}
-            <LumoUI />
+            <HomeUI />
 
             {/* Layer 50 — Custom cursor */}
             <CustomCursor />

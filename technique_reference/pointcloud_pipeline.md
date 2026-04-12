@@ -58,7 +58,7 @@ Before dropping the file on the site:
 ## Dropping it into the site
 
 1. Place the file at `public/models/yourname.ply` (or `.pcd`)
-2. In `src/components/lumo/ThreeBackground.tsx`:
+2. In `src/components/home/ThreeBackground.tsx`:
 
 **If using PLY** (swap loader):
 ```tsx

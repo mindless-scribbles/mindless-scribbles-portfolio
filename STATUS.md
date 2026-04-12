@@ -3,7 +3,7 @@
 ## Last Session
 
 - **Date:** 2026-04-12
-- **Summary:** Split the Info page into two routes — `/expertise` and `/contact`. Renamed `src/components/info/` → `src/components/expertise/` (and the files inside: `InfoPage.tsx` → `ExpertisePage.tsx`, `InfoUI.tsx` → `ExpertiseUI.tsx`, `info.module.css` → `expertise.module.css`), moved the route to `src/pages/expertise/`, and extracted the contact form into a new `src/components/contact/` module with its own `src/pages/contact/index.tsx`. Updated `content/data/config.json` nav labels from `Info`/`/info` to `Expertise`/`/expertise`. Homepage Lumo nav cleanup (M-S dash removal + Index link removal) committed as `4f2b91f`.
+- **Summary:** Split the Info page into two routes — `/expertise` and `/contact`. Renamed `src/components/info/` → `src/components/expertise/` (and the files inside: `InfoPage.tsx` → `ExpertisePage.tsx`, `InfoUI.tsx` → `ExpertiseUI.tsx`, `info.module.css` → `expertise.module.css`), moved the route to `src/pages/expertise/`, and extracted the contact form into a new `src/components/contact/` module with its own `src/pages/contact/index.tsx`. Updated `content/data/config.json` nav labels from `Info`/`/info` to `Expertise`/`/expertise`. Homepage nav cleanup (M-S dash removal + Index link removal) committed as `4f2b91f`.
 
 ## Project State
 
@@ -13,7 +13,7 @@ Shipped so far (recent commits):
 
 - Repo repurposed from the original Stackbit template into the mindless-scribbles.com playground (`a28e783`).
 - First-pass site design (`dd42bce`) and mobile-responsive typography/layout pass (`12e4b53`, `43f03fc`).
-- Lumo design system in `src/components/lumo/` — `LumoUI` chrome (brand, nav, cursor), `ThreeBackground` 3D scene, `BlurMask`, `CustomCursor`.
+- Home landing design in `src/components/home/` — `HomeUI` chrome (brand, nav, cursor), `ThreeBackground` 3D scene, `BlurMask`, `CustomCursor`.
 - Journal system: `a5af98b` added journal detail pages with a cellular shader background; `243e0ef` added a journal template and excluded underscore-prefixed files (`_template.md`) from routing. One real entry so far: `reaction-diffusion-systems.md`.
 - Info/Expertise page with bio, contact form, and skill marquee (`6e81e9b`).
 - Homepage nav cleanup — removed the M-S dash and the Index link (`4f2b91f`).

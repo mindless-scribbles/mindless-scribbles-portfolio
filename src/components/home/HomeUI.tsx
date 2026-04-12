@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import styles from './lumo.module.css';
+import styles from './home.module.css';
 import { VERSION_SHORT, EST_ROMAN, LOCATION, EMAIL } from '@/lib/site-meta';
 
-export default function LumoUI() {
+export default function HomeUI() {
     const [copied, setCopied] = useState(false);
 
     const copyEmail = async () => {
