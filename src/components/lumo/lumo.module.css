@@ -299,6 +299,7 @@
     text-decoration: none;
     position: relative;
     overflow: hidden;
+    isolation: isolate;
     display: inline-flex;
     align-items: center;
     justify-content: center;
