@@ -10,8 +10,8 @@
         "primaryLinks": [
             {
                 "type": "Link",
-                "label": "Info",
-                "url": "/info"
+                "label": "Expertise",
+                "url": "/expertise"
             },
             {
                 "type": "Link",
@@ -51,8 +51,8 @@
         "primaryLinks": [
             {
                 "type": "Link",
-                "label": "Info",
-                "url": "/info",
+                "label": "Expertise",
+                "url": "/expertise",
                 "altText": ""
             },
             {

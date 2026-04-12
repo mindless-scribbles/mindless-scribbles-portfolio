@@ -6,6 +6,43 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is **mindless-scribbles.com** — a Next.js playground for experiments, blog posts, and interactive demos.
 
+## Session Continuity
+
+At the start of every session, read `STATUS.md` before doing anything else. Orient yourself before writing any code.
+
+At the end of every session (when I say "wrap up", "park this", "let's stop", "goodnight", or similar), update `STATUS.md` with:
+
+- What we worked on this session
+- Which files were created or modified
+- Key decisions made
+- Clear next steps (specific, not vague)
+
+## Learning Loop
+
+Read `LESSONS.md` at session start alongside `STATUS.md`.
+
+After any correction or mistake:
+
+1. Fix the immediate problem
+2. Add a lesson to `LESSONS.md` that prevents the same mistake
+3. Keep lessons concrete and short
+
+## Planning
+
+Enter Plan Mode for any task that touches more than 2 files. Do not start coding until I approve the plan. If something goes sideways mid-implementation, stop and re-plan instead of patching.
+
+## Verification
+
+This project has no test suite. Before marking a task complete:
+
+- Run `npm run build` to confirm the site still builds.
+- Run `npx eslint .` (or scope to changed files) and fix warnings you introduced.
+- For UI or visual changes, start `npm run dev` and verify the change in the browser before declaring done.
+
+## Context Management
+
+Use subagents for any investigation that requires reading more than 5 files. Keep the main context clean. Run `/compact` proactively when context usage exceeds 50%.
+
 ## Commands
 
 - **Dev server:** `npm run dev` (Next.js dev server)

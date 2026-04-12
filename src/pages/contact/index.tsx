@@ -1,14 +1,14 @@
 import Head from 'next/head';
-import ExpertisePage from '@/components/expertise/ExpertisePage';
+import ContactPage from '@/components/contact/ContactPage';
 
-export default function Expertise() {
+export default function Contact() {
     return (
         <>
             <Head>
-                <title>Expertise — mindless scribbles</title>
+                <title>Contact — mindless scribbles</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
-            <ExpertisePage />
+            <ContactPage />
         </>
     );
 }

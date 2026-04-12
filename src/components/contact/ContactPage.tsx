@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import { Cormorant_Garamond, Space_Mono } from 'next/font/google';
-import ExpertiseUI from './ExpertiseUI';
-import styles from './expertise.module.css';
+import ContactUI from './ContactUI';
+import styles from './contact.module.css';
 
 const ShaderBackground = dynamic(() => import('../journal/ShaderBackground'), { ssr: false, loading: () => null });
 
@@ -21,11 +21,11 @@ const spaceMono = Space_Mono({
     display: 'swap',
 });
 
-export default function ExpertisePage() {
+export default function ContactPage() {
     return (
         <div className={`${cormorant.variable} ${spaceMono.variable} ${styles.page}`}>
             <ShaderBackground mode={0} />
-            <ExpertiseUI />
+            <ContactUI />
         </div>
     );
 }
