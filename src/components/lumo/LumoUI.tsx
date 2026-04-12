@@ -1,8 +1,21 @@
+import { useState } from 'react';
 import Link from 'next/link';
 import styles from './lumo.module.css';
-import { VERSION_SHORT, EST_ROMAN, LOCATION } from '@/lib/site-meta';
+import { VERSION_SHORT, EST_ROMAN, LOCATION, EMAIL } from '@/lib/site-meta';
 
 export default function LumoUI() {
+    const [copied, setCopied] = useState(false);
+
+    const copyEmail = async () => {
+        try {
+            await navigator.clipboard.writeText(EMAIL);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1800);
+        } catch {
+            // clipboard unavailable — fail silently
+        }
+    };
+
     return (
         <div className={styles.ui}>
             <header className={styles.header}>
@@ -43,7 +56,21 @@ export default function LumoUI() {
                 <div className={styles.metadata}>
                     <span className={styles.metadataSpan}>{VERSION_SHORT}</span>
                     {EST_ROMAN}<br />
-                    {LOCATION}
+                    {LOCATION}<br />
+                    <button
+                        type="button"
+                        className={styles.emailBtn}
+                        onClick={copyEmail}
+                        data-interactive="true"
+                    >
+                        {EMAIL}
+                        <span
+                            className={`${styles.copiedTip} ${copied ? styles.copiedTipVisible : ''}`}
+                            aria-hidden={!copied}
+                        >
+                            Email copied
+                        </span>
+                    </button>
                 </div>
             </footer>
         </div>

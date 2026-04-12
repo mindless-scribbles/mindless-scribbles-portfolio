@@ -1,8 +1,21 @@
+import { useState } from 'react';
 import Link from 'next/link';
 import styles from './contact.module.css';
-import { VERSION_LONG, LOCATION, COPYRIGHT } from '@/lib/site-meta';
+import { VERSION_LONG, LOCATION, EMAIL, SOCIALS, COPYRIGHT } from '@/lib/site-meta';
 
 export default function ContactUI() {
+    const [copied, setCopied] = useState(false);
+
+    const copyEmail = async () => {
+        try {
+            await navigator.clipboard.writeText(EMAIL);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1800);
+        } catch {
+            // clipboard unavailable — fail silently
+        }
+    };
+
     return (
         <div className={styles.wrapper}>
             {/* ─── Header ─── */}
@@ -39,13 +52,29 @@ export default function ContactUI() {
 
                     <div className={styles.contactDetails}>
                         <div>CURRENT_LOC: {LOCATION}, CA</div>
+                        <div>
+                            EMAIL:{' '}
+                            <button
+                                type="button"
+                                className={styles.emailBtn}
+                                onClick={copyEmail}
+                            >
+                                {EMAIL}
+                                <span
+                                    className={`${styles.copiedTip} ${copied ? styles.copiedTipVisible : ''}`}
+                                    aria-hidden={!copied}
+                                >
+                                    Email copied
+                                </span>
+                            </button>
+                        </div>
                         <div>STATUS: ONLINE / AVAILABLE FOR COLLABORATION</div>
                         <div>ARCHIVE_LAST_UPDATED: 10.04.26</div>
                         <br />
                         <div>SOCIALS:</div>
-                        <a href="#">INSTAGRAM.EXE</a><br />
-                        <a href="#">GITHUB.SH</a><br />
-                        <a href="#">LINKEDIN.LOG</a>
+                        <a href={SOCIALS.instagram} target="_blank" rel="noopener noreferrer">INSTAGRAM.EXE</a><br />
+                        <a href={SOCIALS.youtube} target="_blank" rel="noopener noreferrer">YOUTUBE.MP4</a><br />
+                        <a href={SOCIALS.linkedin} target="_blank" rel="noopener noreferrer">LINKEDIN.LOG</a>
                     </div>
                 </div>
             </main>

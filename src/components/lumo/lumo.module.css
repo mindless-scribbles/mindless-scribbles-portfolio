@@ -249,6 +249,46 @@
     color: #1A1817;
 }
 
+.emailBtn {
+    position: relative;
+    display: inline-block;
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+    text-transform: uppercase;
+    cursor: none;
+}
+
+.emailBtn:hover {
+    color: #1A1817;
+}
+
+.copiedTip {
+    position: absolute;
+    right: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #EBE6E0;
+    background: #1A1817;
+    padding: 4px 8px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.copiedTipVisible {
+    opacity: 1;
+}
+
 /* ─── Buttons ────────────────────────────────────────────────── */
 .btn {
     font-family: var(--font-mono);
