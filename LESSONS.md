@@ -18,6 +18,9 @@ The repo has a `technique_reference/` directory with workflow notes (pointcloud 
 **Legacy `content/pages/*.md` can shadow explicit `src/pages/*` routes:**
 The catch-all `src/pages/[...slug].tsx` enumerates every Markdown file under `content/pages/` as a static path. If you add an explicit route like `src/pages/expertise/index.tsx` while a matching `content/pages/expertise.md` still exists, `next build` fails with a path-conflict error. Before creating a new top-level route, check `content/pages/` for a file that would produce the same URL and delete or rename it. Learned when shipping the original `/info` page — `content/pages/info.md` had to be removed before the build would pass.
 
+**Don't commit scaffolding for a separate project into this repo:**
+`dondecastro-demoreel/` was scaffolded as a subfolder here (`a-different-project/` inside the portfolio repo), which conflated two unrelated sites' histories. Kept this way, every commit to either project would mix into the portfolio's `main`. If a folder represents a separate deployable project (different domain, different stack, different deploy target), it gets its own repo from day one — scaffold it as a sibling in `~/workspace/github.com/<org>/<project>/` with its own `git init`, not as a subfolder of an existing repo. Learned 2026-04-12 when extracting `dondecastro-demoreel/` (destined for `dondecastro.com` on Astro + Netlify) out into its own repo.
+
 <!-- Example of a good lesson:
 **Never modify the config loader without running integration tests:**
 Unit tests pass but the config loader has side effects on the database
