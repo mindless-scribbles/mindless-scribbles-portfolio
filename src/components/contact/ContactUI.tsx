@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styles from './contact.module.css';
+import { VERSION_LONG, LOCATION, COPYRIGHT } from '@/lib/site-meta';
 
 export default function ContactUI() {
     return (
@@ -7,14 +8,13 @@ export default function ContactUI() {
             {/* ─── Header ─── */}
             <header className={styles.header}>
                 <div className={styles.headerLeft}>
-                    <span>SYSTEM ARCHIVE V.04</span>
+                    <span>{VERSION_LONG}</span>
                     <span>TRANSMISSION / HANDSHAKE</span>
                 </div>
                 <div className={styles.headerRight}>
                     <Link href="/">HOME</Link>
                     <Link href="/expertise">EXPERTISE</Link>
                     <Link href="/journal">JOURNAL</Link>
-                    <Link href="/contact" className={styles.activeLink}>MAIL</Link>
                 </div>
             </header>
 
@@ -38,7 +38,7 @@ export default function ContactUI() {
                     </form>
 
                     <div className={styles.contactDetails}>
-                        <div>CURRENT_LOC: LOS ANGELES, CA</div>
+                        <div>CURRENT_LOC: {LOCATION}, CA</div>
                         <div>STATUS: ONLINE / AVAILABLE FOR COLLABORATION</div>
                         <div>ARCHIVE_LAST_UPDATED: 10.04.26</div>
                         <br />
@@ -52,7 +52,7 @@ export default function ContactUI() {
 
             {/* ─── Footer ─── */}
             <footer className={styles.footer}>
-                <span>&copy; 2016 MINDLESS SCRIBBLES INCORPORATED</span>
+                <span>{COPYRIGHT}</span>
                 <span>LATENCY: 14MS</span>
             </footer>
         </div>

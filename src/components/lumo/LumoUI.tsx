@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styles from './lumo.module.css';
+import { VERSION_SHORT, EST_ROMAN, LOCATION } from '@/lib/site-meta';
 
 export default function LumoUI() {
     return (
@@ -40,9 +41,9 @@ export default function LumoUI() {
                 </div>
 
                 <div className={styles.metadata}>
-                    <span className={styles.metadataSpan}>SYS.V.2.0</span>
-                    EST. MMXXIV<br />
-                    PARIS / LA
+                    <span className={styles.metadataSpan}>{VERSION_SHORT}</span>
+                    {EST_ROMAN}<br />
+                    {LOCATION}
                 </div>
             </footer>
         </div>

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styles from './journal.module.css';
+import { VERSION_LONG } from '@/lib/site-meta';
 
 export interface JournalEntry {
     label: string;
@@ -45,14 +46,13 @@ export default function JournalUI({ entries, activeShader, onEnter, onLeave, isH
         <div className={styles.wrapper}>
             <header className={styles.header}>
                 <div className={styles.headerLeft}>
-                    <span>SYSTEM ARCHIVE V.04</span>
+                    <span>{VERSION_LONG}</span>
                     <span>BASED IN [GLSL/TD]</span>
                 </div>
                 <div className={styles.headerRight}>
                     <Link href="/">HOME</Link>
-                    <a href="#">INFO</a>
-                    <a href="#">INDEX</a>
-                    <a href="#">MAIL</a>
+                    <Link href="/expertise">EXPERTISE</Link>
+                    <Link href="/contact">CONTACT</Link>
                 </div>
             </header>
 

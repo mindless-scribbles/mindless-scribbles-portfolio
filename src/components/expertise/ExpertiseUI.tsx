@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styles from './expertise.module.css';
+import { VERSION_LONG, COPYRIGHT } from '@/lib/site-meta';
 
 const SKILLS = [
     'MAYA', 'MOTIONBUILDER', 'HOUDINI', 'TOUCHDESIGNER', 'PYTHON', 'GLSL',
@@ -13,14 +14,13 @@ export default function ExpertiseUI() {
             {/* ─── Header ─── */}
             <header className={styles.header}>
                 <div className={styles.headerLeft}>
-                    <span>SYSTEM ARCHIVE V.04</span>
+                    <span>{VERSION_LONG}</span>
                     <span>ABOUT / INTEL</span>
                 </div>
                 <div className={styles.headerRight}>
                     <Link href="/">HOME</Link>
-                    <Link href="/expertise" className={styles.activeLink}>EXPERTISE</Link>
                     <Link href="/journal">JOURNAL</Link>
-                    <Link href="/contact">MAIL</Link>
+                    <Link href="/contact">CONTACT</Link>
                 </div>
             </header>
 
@@ -42,7 +42,7 @@ export default function ExpertiseUI() {
 
             {/* ─── Footer ─── */}
             <footer className={styles.footer}>
-                <span>&copy; 2016 MINDLESS SCRIBBLES INCORPORATED</span>
+                <span>{COPYRIGHT}</span>
                 <span>LATENCY: 14MS</span>
             </footer>
         </div>

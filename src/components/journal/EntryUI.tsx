@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Markdown from 'markdown-to-jsx';
 import styles from './journal.module.css';
+import { VERSION_LONG } from '@/lib/site-meta';
 
 interface LogEntry {
     date: string;
@@ -43,14 +44,14 @@ export default function EntryUI({ entry }: Props) {
             {/* ─── Header ─── */}
             <header className={styles.header}>
                 <div className={styles.headerLeft}>
-                    <span>SYSTEM ARCHIVE</span>
+                    <span>{VERSION_LONG}</span>
                     <span>{ref}</span>
                 </div>
                 <div className={styles.headerRight}>
                     <Link href="/">HOME</Link>
+                    <Link href="/expertise">EXPERTISE</Link>
                     <Link href="/journal">JOURNAL</Link>
-                    <a href="#">INFO</a>
-                    <a href="#">MAIL</a>
+                    <Link href="/contact">CONTACT</Link>
                 </div>
             </header>
 
