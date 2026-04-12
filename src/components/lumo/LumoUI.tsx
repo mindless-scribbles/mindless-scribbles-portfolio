@@ -8,14 +8,12 @@ export default function LumoUI() {
                 <a href="#" className={styles.brand}>
                     <span className={styles.brandLetters}>
                         <span className={styles.brandM}>M</span>
-                        <span className={styles.brandDash}>-</span>
                         <span className={styles.brandS}>S</span>
                     </span>
                     <span className={styles.brandSub}>Creative Agency</span>
                 </a>
                 <nav className={styles.nav}>
-                    <a href="#" className={styles.navLink} data-interactive="true">Index</a>
-                    <Link href="/info" className={styles.navLink} data-interactive="true">Expertise</Link>
+                    <Link href="/expertise" className={styles.navLink} data-interactive="true">Expertise</Link>
                     <Link href="/journal" className={styles.navLink} data-interactive="true">Journal</Link>
                     <a href="#" className={styles.navLink} data-interactive="true">Contact</a>
                 </nav>

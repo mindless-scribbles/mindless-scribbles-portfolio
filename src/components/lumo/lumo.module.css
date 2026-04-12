@@ -111,6 +111,7 @@
     font-weight: 400;
     font-style: italic;
     letter-spacing: -0.02em;
+    margin-left: 0em;
     color: transparent;
     -webkit-text-stroke: 1px #1A1817;
 }
