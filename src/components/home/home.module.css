@@ -449,6 +449,12 @@
     .footer {
         column-gap: 24px;
     }
+
+    /* Lift the hero wordmark off the footer and nudge it right in short
+       landscape viewports. */
+    .heroArea {
+        transform: translate(15px, -10px);
+    }
 }
 
 @media (max-width: 768px) and (orientation: portrait) {
