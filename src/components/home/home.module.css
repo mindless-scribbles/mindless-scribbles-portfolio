@@ -213,10 +213,11 @@
     font-family: var(--font-mono);
     font-size: 0.7rem;
     line-height: 1.6;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.03em;
     text-transform: uppercase;
     color: #7A726D;
-    max-width: 250px;
+    max-width: 320px;
+    text-align: justify;
     opacity: 0;
     animation: fadeIn 2s cubic-bezier(0.16, 1, 0.3, 1) forwards 1s;
 }
@@ -434,6 +435,16 @@
 }
 
 /* ─── Mobile portrait ────────────────────────────────────────── */
+/* Landscape phones: short viewport. Keep the mission block compact so it
+   clears SCRIBBLES and sits level with the corner metadata text. */
+@media (orientation: landscape) and (max-height: 600px) {
+    .mission {
+        font-size: 0.58rem;
+        line-height: 1.85;
+        letter-spacing: 0.02em;
+    }
+}
+
 @media (max-width: 768px) and (orientation: portrait) {
     .brandSub {
         margin-top: -1px;
