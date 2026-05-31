@@ -46,10 +46,7 @@ export default function HomeUI() {
 
                 <div className={styles.actions}>
                     <a href="#" className={`${styles.btn} ${styles.btnOutline}`} data-interactive="true">
-                        View Reel
-                    </a>
-                    <a href="#" className={`${styles.btn} ${styles.btnFill}`} data-interactive="true">
-                        Start Project
+                        Current<br />Experiment
                     </a>
                 </div>
 
