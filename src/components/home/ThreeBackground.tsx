@@ -1,7 +1,17 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { PCDLoader } from 'three/examples/jsm/loaders/PCDLoader.js';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
+
+// ── Model preview knobs ───────────────────────────────────────
+// Faint wireframe of /public/models/4_12_2026.obj. White at 0.15 is
+// invisible on the light (0xEBE6E0) background, so the tone matches the
+// site's existing accent grey. Set WIRE_COLOR to 0xffffff for literal white.
+const MODEL_URL    = '/models/4_12_2026.obj';
+const WIRE_COLOR   = 0xa89f98;
+const WIRE_OPACITY = 0.25;
+const FIT_SIZE     = 0.727; // target max dimension after auto-fit (another 5% smaller)
+const RAISE_PX     = 150;   // lift model up the screen so the face clears the watermark
 
 export default function ThreeBackground() {
     const mountRef = useRef<HTMLDivElement>(null);
@@ -39,7 +49,7 @@ export default function ThreeBackground() {
         controls.dampingFactor   = 0.05;
         controls.autoRotate      = true;
         controls.autoRotateSpeed = 0.5;
-        controls.target.set(0, -0.15, 0); // pivot below center of bust
+        controls.target.set(0, 0, 0); // model is auto-centered at origin
 
         // ── Fallback geometry (torus knot particles) ──────────────
         const createFallback = () => {
@@ -67,19 +77,43 @@ export default function ThreeBackground() {
             return pts;
         };
 
-        // ── PCD loader with fallback ──────────────────────────────
+        // ── OBJ loader → faint wireframe, with fallback ───────────
         let fallbackPoints: THREE.Points | null = null;
-        const loader = new PCDLoader();
+        let wireGroup: THREE.Group | null = null;
+        const wireMat = new THREE.LineBasicMaterial({
+            color: WIRE_COLOR,
+            transparent: true,
+            opacity: WIRE_OPACITY,
+        });
+        const loader = new OBJLoader();
         loader.load(
-            'https://threejs.org/examples/models/pcd/binary/Zaghetto.pcd',
-            (points) => {
-                points.geometry.center();
-                points.geometry.rotateX(Math.PI);
-                (points.material as THREE.PointsMaterial).size    = 0.005;
-                (points.material as THREE.PointsMaterial).color.setHex(0xA89F98);
-                (points.material as THREE.PointsMaterial).transparent = true;
-                (points.material as THREE.PointsMaterial).opacity  = 0.45;
-                scene.add(points);
+            MODEL_URL,
+            (obj) => {
+                const group = new THREE.Group();
+                obj.traverse((child) => {
+                    const mesh = child as THREE.Mesh;
+                    if (!mesh.isMesh) return;
+                    const wire = new THREE.WireframeGeometry(mesh.geometry);
+                    group.add(new THREE.LineSegments(wire, wireMat));
+                    mesh.geometry.dispose(); // WireframeGeometry copied the data
+                });
+
+                // Auto-center + fit: world = (vertex - center) * scale
+                const box = new THREE.Box3().setFromObject(group);
+                const center = box.getCenter(new THREE.Vector3());
+                const size = box.getSize(new THREE.Vector3());
+                const scale = FIT_SIZE / (Math.max(size.x, size.y, size.z) || 1);
+                group.scale.setScalar(scale);
+                group.position.copy(center).multiplyScalar(-scale);
+
+                // Lift ~RAISE_PX up the screen: convert pixels → world units at
+                // the camera's distance so the face clears the watermark.
+                const camDist = camera.position.distanceTo(controls.target);
+                const visibleHeight = 2 * camDist * Math.tan((camera.fov * Math.PI / 180) / 2);
+                group.position.y += visibleHeight * (RAISE_PX / window.innerHeight);
+
+                wireGroup = group;
+                scene.add(group);
             },
             undefined,
             () => { fallbackPoints = createFallback(); }
@@ -130,6 +164,13 @@ export default function ThreeBackground() {
             window.removeEventListener('mousemove', onMouseMove);
             window.removeEventListener('resize', onResize);
             controls.dispose();
+            if (wireGroup) {
+                wireGroup.traverse((child) => {
+                    const line = child as THREE.LineSegments;
+                    if (line.isLineSegments) line.geometry.dispose();
+                });
+            }
+            wireMat.dispose();
             renderer.dispose();
             if (mount.contains(renderer.domElement)) {
                 mount.removeChild(renderer.domElement);
