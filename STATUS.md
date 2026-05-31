@@ -2,8 +2,12 @@
 
 ## Last Session
 
-- **Date:** 2026-04-12
-- **Summary:** Extracted `dondecastro-demoreel/` out of this repo into its own standalone local git repo. It was tracked as a subfolder here but belongs to the future `dondecastro.com` Astro/Netlify site and should not share history with the portfolio. Moved the folder up one level (`../dondecastro-demoreel/`), committed the deletion here (`9af6bd1`) and pushed to `origin/main`, then `git init`'d the new location with a single root commit (`f487eb8`). No GitHub remote created for the new repo yet — user will push it when they open the demoreel session.
+- **Date:** 2026-05-30
+- **Summary:** Home footer + expertise copy polish. Replaced the two-button footer (View Reel / Start Project) with a single two-line **Current / Experiment** outline button, center-aligned. Fixed landscape-mobile layout: capped `.mission` max-width (320→260px) and added a 24px footer column-gap so the mission block stops touching the button; lifted the hero wordmark off the footer and nudged it right with `transform: translate(15px, -10px)` on `.heroArea` in the `(orientation: landscape) and (max-height: 600px)` media query. Rewrote the expertise bio to tighter copy ending "pixels that breathe". All landscape tweaks live in that one media query (`home.module.css:441`). Committed `0bbce7a` + `5f894ff`, pushed to `origin/main` (now at `5f894ff`).
+
+### Prior session (2026-04-12)
+
+- Extracted `dondecastro-demoreel/` out of this repo into its own standalone local git repo. Moved the folder up one level (`../dondecastro-demoreel/`), committed the deletion here (`9af6bd1`), then `git init`'d the new location with a single root commit (`f487eb8`). No GitHub remote created for the new repo yet — user will push it when they open the demoreel session.
 
 ## Project State
 
@@ -23,7 +27,9 @@ Shipped so far (recent commits):
 
 ## Files Modified (this session)
 
-- Removed `dondecastro-demoreel/` (5 files: `CLAUDE.md`, `QUICKSTART.md`, `README.md`, `decisions.md`, `scaffold.sh`) from this repo — moved to `../dondecastro-demoreel/` and committed as deletion in `9af6bd1`.
+- `src/components/home/HomeUI.tsx` — footer button block: single `Current<br />Experiment` outline link, removed Start Project.
+- `src/components/home/home.module.css` — `text-align: center` on `.btn`; landscape media query gained `.mission` max-width 260px, `.footer` column-gap 24px, and `.heroArea` `transform: translate(15px, -10px)`.
+- `src/components/expertise/ExpertiseUI.tsx` — rewrote bio copy (line 31).
 
 ## Key Decisions
 
@@ -41,4 +47,6 @@ Shipped so far (recent commits):
      Could be: a tricky bug being debugged, an architectural choice being evaluated,
      a dependency issue, or a feature half-built. -->
 
-Repo is clean and pushed. User is pivoting to the new `dondecastro-demoreel/` repo next session — that one is located at `/home/ddecastro/workspace/github.com/mindless-scribbles/dondecastro-demoreel/`, has one root commit (`f487eb8`), and needs a GitHub remote added + first push before any real work begins.
+Repo is clean and pushed (`origin/main` at `5f894ff`). This session was pure UI/copy polish on the home footer + expertise bio. Landscape-mobile numbers (mission max-width 260px, hero `translate(15px, -10px)`, footer gap 24px) were eyeballed, not verified in a real device/browser — worth a quick `npm run dev` check on a landscape phone size if revisited.
+
+The `dondecastro-demoreel/` repo is still parked at `/home/ddecastro/workspace/github.com/mindless-scribbles/dondecastro-demoreel/` (root commit `f487eb8`), still needs a GitHub remote + first push before work begins there.
