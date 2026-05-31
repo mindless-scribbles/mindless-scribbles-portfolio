@@ -21,6 +21,12 @@ The catch-all `src/pages/[...slug].tsx` enumerates every Markdown file under `co
 **Don't commit scaffolding for a separate project into this repo:**
 `dondecastro-demoreel/` was scaffolded as a subfolder here (`a-different-project/` inside the portfolio repo), which conflated two unrelated sites' histories. Kept this way, every commit to either project would mix into the portfolio's `main`. If a folder represents a separate deployable project (different domain, different stack, different deploy target), it gets its own repo from day one — scaffold it as a sibling in `~/workspace/github.com/<org>/<project>/` with its own `git init`, not as a subfolder of an existing repo. Learned 2026-04-12 when extracting `dondecastro-demoreel/` (destined for `dondecastro.com` on Astro + Netlify) out into its own repo.
 
+**Verify framework APIs before coding — training data lags reality:**
+Tailwind CSS v4 and Next.js (Pages Router) APIs shift between versions, and the session-start hook explicitly warns that LLM knowledge of them is outdated. Before using an unfamiliar Tailwind v4 directive/utility, a Next.js config option, or any library API you're not certain of, check the installed version (`package.json`) or official docs rather than writing from memory — a 30-second check beats a silently-wrong build. (Adapted from the `unreal-python` template's "inspect before you code" rule.)
+
+**Don't run `npm run build` while `npm run dev` is live:**
+A production `build` cleans and rewrites `.next`, deleting the dev server's compiled pages mid-run. The dev server then 500s with `ENOENT: .next/server/pages/index.js` and the page renders all white. If it happens: stop the dev server, `rm -rf .next`, and restart `npm run dev`. To verify a build without breaking dev, stop the dev server first (or build in a separate checkout). Learned 2026-05-30 after a build-during-dev wiped the running server's artifacts.
+
 <!-- Example of a good lesson:
 **Never modify the config loader without running integration tests:**
 Unit tests pass but the config loader has side effects on the database
