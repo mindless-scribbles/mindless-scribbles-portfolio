@@ -40,8 +40,8 @@ export default function HomeUI() {
 
             <footer className={styles.footer}>
                 <p className={styles.mission}>
-                    Specializing in <strong className={styles.missionStrong}>spatial design</strong> and
-                    digital experiences that define the visual edge of tomorrow.
+                    <strong className={styles.missionStrong}>CREATIVE TECHNOLOGIST</strong> specializing in
+                    digital experiences and visual experiments that embody an ethos of contrasting simplicity combined with chaotic harmony.
                 </p>
 
                 <div className={styles.actions}>
