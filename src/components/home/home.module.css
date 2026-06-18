@@ -172,16 +172,81 @@
 }
 
 .wordSolid {
-    font-family: var(--font-serif);
+    position: relative;
+    display: inline-block;
     font-size: 11vw;
     line-height: 0.8;
-    font-weight: 600;
-    letter-spacing: -0.04em;
     text-transform: uppercase;
     white-space: nowrap;
     margin-left: 5vw;
+    pointer-events: auto;
+    cursor: none;
     opacity: 0;
     animation: slideUpFade 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s;
+}
+
+/* Two stacked renderings of the word. The serif layer is in flow and
+   defines the box; the glitch layer is overlaid and revealed on hover. */
+.wordLayerSerif {
+    display: block;
+    font-family: var(--font-serif);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+}
+
+.wordLayerGlitch {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-family: var(--font-glitch);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: #1A1817;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.wordLayerGlitch::before,
+.wordLayerGlitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+}
+
+/* ── Hover-in: snap to the glitch font under a burst of noise ── */
+.wordSolid[data-glitch='in'] .wordLayerSerif {
+    opacity: 0;
+}
+
+.wordSolid[data-glitch='in'] .wordLayerGlitch {
+    opacity: 1;
+    text-shadow: 0.02em 0 rgba(211, 65, 16, 0.6), -0.02em 0 rgba(0, 200, 220, 0.6);
+    animation: glitchJitter 0.16s steps(2, end) infinite;
+}
+
+.wordSolid[data-glitch='in'] .wordLayerGlitch::before {
+    opacity: 0.85;
+    color: #ff003c;
+    animation: glitchSliceA 0.4s steps(2, end) infinite;
+}
+
+.wordSolid[data-glitch='in'] .wordLayerGlitch::after {
+    opacity: 0.85;
+    color: #00e5ff;
+    animation: glitchSliceB 0.33s steps(2, end) infinite;
+}
+
+/* ── Held: burst settles into the static Rubik Glitch font and stays
+      (no jitter / RGB split). Resets to serif only on page refresh. ── */
+.wordSolid[data-glitch='held'] .wordLayerSerif {
+    opacity: 0;
+}
+
+.wordSolid[data-glitch='held'] .wordLayerGlitch {
+    opacity: 1;
 }
 
 .wordOutline {
@@ -398,6 +463,31 @@
 @keyframes fadeIn {
     from { opacity: 0; }
     to   { opacity: 1; }
+}
+
+/* ── Glitch burst (hover-in) ── */
+@keyframes glitchJitter {
+    0%   { transform: translate(0, 0); }
+    25%  { transform: translate(-2px, 1px); }
+    50%  { transform: translate(2px, -1px); }
+    75%  { transform: translate(-1px, -2px); }
+    100% { transform: translate(1px, 1px); }
+}
+
+@keyframes glitchSliceA {
+    0%, 100% { clip-path: inset(0 0 82% 0); transform: translate(-4px, 0); }
+    20%      { clip-path: inset(38% 0 40% 0); transform: translate(5px, 0); }
+    40%      { clip-path: inset(68% 0 12% 0); transform: translate(-5px, 0); }
+    60%      { clip-path: inset(8% 0 76% 0); transform: translate(4px, 0); }
+    80%      { clip-path: inset(54% 0 26% 0); transform: translate(-3px, 0); }
+}
+
+@keyframes glitchSliceB {
+    0%, 100% { clip-path: inset(70% 0 8% 0); transform: translate(4px, 0); }
+    20%      { clip-path: inset(12% 0 70% 0); transform: translate(-5px, 0); }
+    40%      { clip-path: inset(45% 0 35% 0); transform: translate(5px, 0); }
+    60%      { clip-path: inset(80% 0 5% 0); transform: translate(-4px, 0); }
+    80%      { clip-path: inset(25% 0 58% 0); transform: translate(3px, 0); }
 }
 
 /* ─── Mobile ─────────────────────────────────────────────────── */

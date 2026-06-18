@@ -1,10 +1,35 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import styles from './home.module.css';
 import { VERSION_SHORT, EST_ROMAN, LOCATION, EMAIL } from '@/lib/site-meta';
 
+// Hover-glitch timing: fast burst, then hold on the glitch font.
+const GLITCH_IN_MS = 650;
+
+type GlitchState = 'idle' | 'in' | 'held';
+
 export default function HomeUI() {
     const [copied, setCopied] = useState(false);
+
+    // 'Mindless' font glitch: idle → in (burst) → held (stays on Rubik Glitch).
+    // Fires once, then locked; a page refresh resets it to idle (Playfair).
+    const [glitch, setGlitch] = useState<GlitchState>('idle');
+    const lockRef = useRef(false);
+    const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+    useEffect(() => {
+        const timers = timersRef.current;
+        return () => timers.forEach(clearTimeout);
+    }, []);
+
+    const triggerGlitch = () => {
+        if (lockRef.current) return;
+        lockRef.current = true;
+        setGlitch('in');
+        timersRef.current.push(
+            setTimeout(() => setGlitch('held'), GLITCH_IN_MS),
+        );
+    };
 
     const copyEmail = async () => {
         try {
@@ -34,7 +59,16 @@ export default function HomeUI() {
             </header>
 
             <main className={styles.heroArea}>
-                <h1 className={styles.wordSolid}>Mindless</h1>
+                <h1
+                    className={styles.wordSolid}
+                    data-glitch={glitch}
+                    onMouseEnter={triggerGlitch}
+                >
+                    <span className={styles.wordLayerSerif}>Mindless</span>
+                    <span className={styles.wordLayerGlitch} data-text="Mindless" aria-hidden="true">
+                        Mindless
+                    </span>
+                </h1>
                 <h1 className={styles.wordOutline}>Scribbles</h1>
             </main>
 

@@ -27,6 +27,12 @@ Tailwind CSS v4 and Next.js (Pages Router) APIs shift between versions, and the 
 **Don't run `npm run build` while `npm run dev` is live:**
 A production `build` cleans and rewrites `.next`, deleting the dev server's compiled pages mid-run. The dev server then 500s with `ENOENT: .next/server/pages/index.js` and the page renders all white. If it happens: stop the dev server, `rm -rf .next`, and restart `npm run dev`. To verify a build without breaking dev, stop the dev server first (or build in a separate checkout). Learned 2026-05-30 after a build-during-dev wiped the running server's artifacts.
 
+**"No animation on hover" was `prefers-reduced-motion`, not a bug — and you can verify hover JS headlessly:**
+The hero glitch effect appeared broken ("no visible change on hover") for a whole session. Root cause: the browser reported `prefers-reduced-motion: reduce` (common on Windows/WSL when "Show animations" is off or Battery Saver is on), and `triggerGlitch` correctly early-returns in that case. Before assuming a motion/hover effect is broken, check reduced-motion first. To verify per-tab without touching OS settings: DevTools → Cmd/Ctrl+Shift+P → "Show Rendering" → "Emulate CSS media feature prefers-reduced-motion" → `no-preference`. To debug hover/JS behavior that `curl` can't see (this site is client-rendered — empty `#__next` in SSR), drive the system Chrome via the DevTools Protocol from Node 22 (global `WebSocket`, no deps): launch `google-chrome-stable --headless=new --remote-debugging-port`, attach over CDP, `Input.dispatchMouseEvent` a real `mouseMoved` over the element, then read back the mutated attribute/computed style. Confirmed the state machine + CSS were correct this way. Learned 2026-06-18.
+
+**`npx eslint .` does not work — use `tsc` for verification:**
+The repo has no `lint` script in `package.json` and ESLint v9 is installed without a flat `eslint.config.js`, so the `npx eslint .` documented in CLAUDE.md fails with "couldn't find an eslint.config file." Don't burn time trying to make it run. For verification use `npx tsc --noEmit` (type-checks clean) plus the dev-server compile + browser check. If lint is actually wanted, that's a separate setup task (add a flat config or `next lint`). Learned 2026-06-16.
+
 <!-- Example of a good lesson:
 **Never modify the config loader without running integration tests:**
 Unit tests pass but the config loader has side effects on the database
