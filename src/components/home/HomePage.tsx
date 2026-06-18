@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import { Italianno, Playfair_Display, Rubik_Glitch, Space_Mono } from 'next/font/google';
+import { Italianno, Playfair_Display, Space_Mono } from 'next/font/google';
 import HomeUI from './HomeUI';
 import styles from './home.module.css';
 
@@ -31,16 +31,9 @@ const italianno = Italianno({
     display: 'swap',
 });
 
-const rubikGlitch = Rubik_Glitch({
-    subsets: ['latin'],
-    weight: '400',
-    variable: '--font-glitch',
-    display: 'swap',
-});
-
 export default function HomePage() {
     return (
-        <div className={`${playfair.variable} ${spaceMono.variable} ${italianno.variable} ${rubikGlitch.variable} ${styles.page}`}>
+        <div className={`${playfair.variable} ${spaceMono.variable} ${italianno.variable} ${styles.page}`}>
             {/* Layer 0 — Three.js particle cloud */}
             <ThreeBackground />
 

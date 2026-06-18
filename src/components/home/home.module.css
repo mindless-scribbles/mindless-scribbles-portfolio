@@ -185,68 +185,52 @@
     animation: slideUpFade 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s;
 }
 
-/* Two stacked renderings of the word. The serif layer is in flow and
-   defines the box; the glitch layer is overlaid and revealed on hover. */
-.wordLayerSerif {
+/* Single Playfair rendering of the word. The ::before/::after are
+   red/cyan duplicates used for the chromatic-split glitch on hover. */
+.wordGlitch {
+    position: relative;
     display: block;
     font-family: var(--font-serif);
     font-weight: 600;
     letter-spacing: -0.04em;
-}
-
-.wordLayerGlitch {
-    position: absolute;
-    top: 0;
-    left: 0;
-    font-family: var(--font-glitch);
-    font-weight: 400;
-    letter-spacing: -0.02em;
     color: #1A1817;
-    opacity: 0;
-    pointer-events: none;
 }
 
-.wordLayerGlitch::before,
-.wordLayerGlitch::after {
+.wordGlitch::before,
+.wordGlitch::after {
     content: attr(data-text);
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     opacity: 0;
+    pointer-events: none;
 }
 
-/* ── Hover-in: snap to the glitch font under a burst of noise ── */
-.wordSolid[data-glitch='in'] .wordLayerSerif {
-    opacity: 0;
+/* ── Hover glitch: the Playfair word eases into a displaced/shredded end-state
+      (the SVG filter ramps in via SMIL) while a decelerating chromatic burst
+      settles. Same font throughout; holds until the page is refreshed. ── */
+.wordSolid[data-glitch='on'] .wordGlitch {
+    filter: url('#mindlessGlitchDistort');
+    animation: glitchSettle 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.wordSolid[data-glitch='in'] .wordLayerGlitch {
-    opacity: 1;
-    text-shadow: 0.02em 0 rgba(211, 65, 16, 0.6), -0.02em 0 rgba(0, 200, 220, 0.6);
-    animation: glitchJitter 0.16s steps(2, end) infinite;
-}
-
-.wordSolid[data-glitch='in'] .wordLayerGlitch::before {
-    opacity: 0.85;
+.wordSolid[data-glitch='on'] .wordGlitch::before {
     color: #ff003c;
-    animation: glitchSliceA 0.4s steps(2, end) infinite;
+    animation: glitchFringeA 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.wordSolid[data-glitch='in'] .wordLayerGlitch::after {
-    opacity: 0.85;
+.wordSolid[data-glitch='on'] .wordGlitch::after {
     color: #00e5ff;
-    animation: glitchSliceB 0.33s steps(2, end) infinite;
+    animation: glitchFringeB 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* ── Held: burst settles into the static Rubik Glitch font and stays
-      (no jitter / RGB split). Resets to serif only on page refresh. ── */
-.wordSolid[data-glitch='held'] .wordLayerSerif {
-    opacity: 0;
-}
-
-.wordSolid[data-glitch='held'] .wordLayerGlitch {
-    opacity: 1;
+/* Off-screen holder for the SVG filter definition (no layout footprint). */
+.glitchDefs {
+    position: absolute;
+    width: 0;
+    height: 0;
+    pointer-events: none;
 }
 
 .wordOutline {
@@ -465,29 +449,27 @@
     to   { opacity: 1; }
 }
 
-/* ── Glitch burst (hover-in) ── */
-@keyframes glitchJitter {
-    0%   { transform: translate(0, 0); }
-    25%  { transform: translate(-2px, 1px); }
-    50%  { transform: translate(2px, -1px); }
-    75%  { transform: translate(-1px, -2px); }
-    100% { transform: translate(1px, 1px); }
+/* ── Glitch burst → settle (decelerating shake + chromatic decay that ends
+      on the held look; pairs with the eased displacement ramp) ── */
+@keyframes glitchSettle {
+    0%   { transform: translate(-4px, 0); text-shadow: 0.05em 0 rgba(211, 65, 16, 0.7), -0.05em 0 rgba(0, 200, 220, 0.7); }
+    20%  { transform: translate(4px, 0); }
+    40%  { transform: translate(-2px, 0); }
+    65%  { transform: translate(2px, 0); }
+    85%  { transform: translate(-1px, 0); }
+    100% { transform: translate(0, 0); text-shadow: 0.014em 0 rgba(211, 65, 16, 0.5), -0.014em 0 rgba(0, 200, 220, 0.5); }
 }
 
-@keyframes glitchSliceA {
-    0%, 100% { clip-path: inset(0 0 82% 0); transform: translate(-4px, 0); }
-    20%      { clip-path: inset(38% 0 40% 0); transform: translate(5px, 0); }
-    40%      { clip-path: inset(68% 0 12% 0); transform: translate(-5px, 0); }
-    60%      { clip-path: inset(8% 0 76% 0); transform: translate(4px, 0); }
-    80%      { clip-path: inset(54% 0 26% 0); transform: translate(-3px, 0); }
+@keyframes glitchFringeA {
+    0%   { opacity: 0.8; transform: translate(-7px, 0); clip-path: inset(8% 0 56% 0); }
+    50%  { opacity: 0.45; transform: translate(4px, 0); clip-path: inset(40% 0 30% 0); }
+    100% { opacity: 0; transform: translate(0, 0); clip-path: inset(0 0 0 0); }
 }
 
-@keyframes glitchSliceB {
-    0%, 100% { clip-path: inset(70% 0 8% 0); transform: translate(4px, 0); }
-    20%      { clip-path: inset(12% 0 70% 0); transform: translate(-5px, 0); }
-    40%      { clip-path: inset(45% 0 35% 0); transform: translate(5px, 0); }
-    60%      { clip-path: inset(80% 0 5% 0); transform: translate(-4px, 0); }
-    80%      { clip-path: inset(25% 0 58% 0); transform: translate(3px, 0); }
+@keyframes glitchFringeB {
+    0%   { opacity: 0.8; transform: translate(7px, 0); clip-path: inset(60% 0 6% 0); }
+    50%  { opacity: 0.45; transform: translate(-4px, 0); clip-path: inset(30% 0 40% 0); }
+    100% { opacity: 0; transform: translate(0, 0); clip-path: inset(0 0 0 0); }
 }
 
 /* ─── Mobile ─────────────────────────────────────────────────── */
