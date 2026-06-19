@@ -20,9 +20,9 @@ export default function HomeUI() {
         if (lockRef.current) return;
         lockRef.current = true;
         setGlitch('on');
-        // Ease the displacement scale up and freeze it. SMIL can't be driven by
-        // CSS, so trigger the <animate> imperatively.
-        const distort = document.getElementById('mindlessDistortAnim');
+        // Kick off the SMIL choreography (scale burst → freeze → breathe; the
+        // seed-churn and breathing chain off this one's begin/end events).
+        const distort = document.getElementById('mindlessScaleBurst');
         (distort as unknown as SVGAnimateElement | null)?.beginElement();
     };
 
@@ -42,7 +42,18 @@ export default function HomeUI() {
                 displacement shreds the Playfair glyphs into horizontal slices. */}
             <svg className={styles.glitchDefs} aria-hidden="true" focusable="false">
                 <filter id="mindlessGlitchDistort" x="-25%" y="-5%" width="150%" height="110%" colorInterpolationFilters="sRGB">
-                    <feTurbulence type="fractalNoise" baseFrequency="0.01 0.3" numOctaves={1} seed={11} result="noise" />
+                    <feTurbulence type="fractalNoise" baseFrequency="0.01 0.3" numOctaves={1} seed={11} result="noise">
+                        {/* Churn the noise pattern during the burst... */}
+                        <animate attributeName="seed" begin="mindlessScaleBurst.begin"
+                            dur="1s" values="11;17;8;14;11" keyTimes="0;0.18;0.4;0.62;1"
+                            calcMode="spline" keySplines="0.3 0 0.3 1; 0.3 0 0.3 1; 0.3 0 0.3 1; 0.3 0 0.3 1"
+                            fill="freeze" />
+                        {/* ...then a slow continuous boil at rest (faint life). */}
+                        <animate attributeName="seed" begin="mindlessScaleBurst.end"
+                            dur="9s" values="11;14;11" keyTimes="0;0.5;1"
+                            calcMode="spline" keySplines="0.4 0 0.6 1; 0.4 0 0.6 1"
+                            repeatCount="indefinite" />
+                    </feTurbulence>
                     {/* Quantize horizontal displacement into hard-edged chunk
                         offsets; flatten the vertical channel to 0.5 so the word
                         displaces only sideways and never drifts up/down. */}
@@ -51,10 +62,18 @@ export default function HomeUI() {
                         <feFuncG type="discrete" tableValues="0.5" />
                     </feComponentTransfer>
                     <feDisplacementMap in="SourceGraphic" in2="map" scale={0} xChannelSelector="R" yChannelSelector="G">
-                        {/* Ease the shred in and freeze it (decelerating end). */}
-                        <animate id="mindlessDistortAnim" attributeName="scale" begin="indefinite"
-                            dur="0.8s" values="0;24" keyTimes="0;1"
-                            calcMode="spline" keySplines="0.16 1 0.3 1" fill="freeze" />
+                        {/* Burst rhythm: anticipation → overshoot hit → pull →
+                            hold → relapse → settle, then freeze. */}
+                        <animate id="mindlessScaleBurst" attributeName="scale" begin="indefinite"
+                            dur="1s" values="0;2;32;16;24;28;19;24" keyTimes="0;0.05;0.17;0.3;0.45;0.57;0.7;1"
+                            calcMode="spline"
+                            keySplines="0.6 0 0.4 1; 0.7 0 0.3 1; 0.4 0 0.3 1; 0.3 0 0.4 1; 0.5 0 0.3 1; 0.4 0 0.3 1; 0.3 0 0.3 1"
+                            fill="freeze" />
+                        {/* Faint breathing throb layered on the frozen value. */}
+                        <animate attributeName="scale" begin="mindlessScaleBurst.end"
+                            dur="5.5s" values="0;1.6;-1.4;1;0" keyTimes="0;0.28;0.55;0.8;1"
+                            calcMode="spline" keySplines="0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1"
+                            additive="sum" repeatCount="indefinite" />
                     </feDisplacementMap>
                 </filter>
             </svg>
