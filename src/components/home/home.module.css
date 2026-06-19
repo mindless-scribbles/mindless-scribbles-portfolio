@@ -212,17 +212,27 @@
       settles. Same font throughout; holds until the page is refreshed. ── */
 .wordSolid[data-glitch='on'] .wordGlitch {
     filter: url('#mindlessGlitchDistort');
-    animation: glitchSettle 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    /* Punchy steppy jolt up front (transform), chromatic decay easing into
+       the settle (text-shadow) — different props, so they layer. */
+    animation:
+        glitchJolt 0.4s steps(1, end) forwards,
+        glitchChroma 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .wordSolid[data-glitch='on'] .wordGlitch::before {
     color: #ff003c;
-    animation: glitchFringeA 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    /* Steppy position/clip flicker, but a smooth opacity fade-out so the
+       chroma dissolves instead of disappearing in steps. */
+    animation:
+        glitchFringeA 0.4s steps(1, end) forwards,
+        glitchFringeFade 0.5s ease forwards;
 }
 
 .wordSolid[data-glitch='on'] .wordGlitch::after {
     color: #00e5ff;
-    animation: glitchFringeB 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation:
+        glitchFringeB 0.4s steps(1, end) forwards,
+        glitchFringeFade 0.5s ease forwards;
 }
 
 /* Off-screen holder for the SVG filter definition (no layout footprint). */
@@ -451,25 +461,46 @@
 
 /* ── Glitch burst → settle (decelerating shake + chromatic decay that ends
       on the held look; pairs with the eased displacement ramp) ── */
-@keyframes glitchSettle {
-    0%   { transform: translate(-4px, 0); text-shadow: 0.05em 0 rgba(211, 65, 16, 0.7), -0.05em 0 rgba(0, 200, 220, 0.7); }
-    20%  { transform: translate(4px, 0); }
-    40%  { transform: translate(-2px, 0); }
-    65%  { transform: translate(2px, 0); }
-    85%  { transform: translate(-1px, 0); }
-    100% { transform: translate(0, 0); text-shadow: 0.014em 0 rgba(211, 65, 16, 0.5), -0.014em 0 rgba(0, 200, 220, 0.5); }
+@keyframes glitchJolt {
+    0%   { transform: translate(-5px, 1px); }
+    8%   { transform: translate(6px, -1px); }
+    16%  { transform: translate(-6px, 1px); }
+    24%  { transform: translate(5px, 0); }
+    33%  { transform: translate(-4px, -1px); }
+    42%  { transform: translate(4px, 1px); }
+    54%  { transform: translate(-3px, 0); }
+    66%  { transform: translate(2px, 0); }
+    80%  { transform: translate(-1px, 0); }
+    100% { transform: translate(0, 0); }
+}
+
+@keyframes glitchChroma {
+    0%   { text-shadow: 0.05em 0 rgba(211, 65, 16, 0.7), -0.05em 0 rgba(0, 200, 220, 0.7); }
+    100% { text-shadow: 0.014em 0 rgba(211, 65, 16, 0.5), -0.014em 0 rgba(0, 200, 220, 0.5); }
 }
 
 @keyframes glitchFringeA {
-    0%   { opacity: 0.8; transform: translate(-7px, 0); clip-path: inset(8% 0 56% 0); }
-    50%  { opacity: 0.45; transform: translate(4px, 0); clip-path: inset(40% 0 30% 0); }
-    100% { opacity: 0; transform: translate(0, 0); clip-path: inset(0 0 0 0); }
+    0%   { transform: translate(-7px, 0); clip-path: inset(6% 0 60% 0); }
+    15%  { transform: translate(5px, 0);  clip-path: inset(46% 0 26% 0); }
+    30%  { transform: translate(-6px, 0); clip-path: inset(18% 0 52% 0); }
+    45%  { transform: translate(4px, 0);  clip-path: inset(62% 0 10% 0); }
+    60%  { transform: translate(-3px, 0); clip-path: inset(34% 0 40% 0); }
+    100% { transform: translate(0, 0);    clip-path: inset(0 0 0 0); }
 }
 
 @keyframes glitchFringeB {
-    0%   { opacity: 0.8; transform: translate(7px, 0); clip-path: inset(60% 0 6% 0); }
-    50%  { opacity: 0.45; transform: translate(-4px, 0); clip-path: inset(30% 0 40% 0); }
-    100% { opacity: 0; transform: translate(0, 0); clip-path: inset(0 0 0 0); }
+    0%   { transform: translate(7px, 0);  clip-path: inset(62% 0 6% 0); }
+    15%  { transform: translate(-5px, 0); clip-path: inset(20% 0 56% 0); }
+    30%  { transform: translate(6px, 0);  clip-path: inset(50% 0 22% 0); }
+    45%  { transform: translate(-4px, 0); clip-path: inset(8% 0 64% 0); }
+    60%  { transform: translate(3px, 0);  clip-path: inset(38% 0 36% 0); }
+    100% { transform: translate(0, 0);    clip-path: inset(0 0 0 0); }
+}
+
+/* Smooth opacity fade for the chroma fringe (kept off the steppy track). */
+@keyframes glitchFringeFade {
+    0%   { opacity: 0.85; }
+    100% { opacity: 0; }
 }
 
 /* ─── Mobile ─────────────────────────────────────────────────── */
